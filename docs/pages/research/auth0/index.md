@@ -1,11 +1,11 @@
 ---
-title: "Auth0"
+title: "DX Research - Auth0"
 ---
 
 # Auth0
 
 - Uses OAuth 2.0 [Client Credentials grant flow](https://datatracker.ietf.org/doc/html/rfc6749).
-- Requires a couple of Auth0 entities: Resource Server and Application (clients).
+- Requires some Auth0 entities: Resource Server and Application (clients).
 - Clients need to be programmatically created via [Auth0 Management API](https://auth0.com/docs/api/management/v2/clients/post-clients), eg: when mapping to SASS customers.
 
 Reference: **[auth0.com/blog/using-m2m-authorization/](https://auth0.com/blog/using-m2m-authorization/)**
@@ -33,7 +33,7 @@ app.get('/api/location/geocode', requireScope('geocode:location'), function(req,
 
 Also available via [API endpoint](https://auth0.com/docs/api/management/v2/clients/post-clients).
 
-By default a Client is not authorized to access any of the Resource Servers. The next step is to authorize the client for the Resource Server and define which scopes are enabled for this client.
+By default, a client is not authorized to access any of the Resource Servers. The next step is to authorize the client for the Resource Server and define which scopes are enabled for this client.
 
 ![Authorizing client](https://raw.githubusercontent.com/auth0-samples/auth0-api-auth-samples/master/docs/media/giftdeliveries-grants.png)
 

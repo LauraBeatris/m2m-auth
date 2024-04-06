@@ -1,11 +1,11 @@
 ---
-title: "Propelauth"
+title: "DX Research - Propelauth"
 ---
 
 # Propelauth
 
 - Provides a hosted UI for creating API keys.
-- Closer to a service-to-service tokens mechanism then a OAuth flow
+- Due to the nature of the generated keys, it's closer to a service-to-service tokens mechanism than an OAuth flow with `client_id` and `client_secret`.
 - Exposes different token types: `Personal` and `Organization`
 - Doesn't support scopes for granular permissions
 

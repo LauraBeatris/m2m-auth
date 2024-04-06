@@ -1,5 +1,5 @@
 ---
-title: "Stytch"
+title: "DX Research - Stytch"
 ---
 
 # Stytch
@@ -7,7 +7,7 @@ title: "Stytch"
 - Uses OAuth 2.0 [Client Credentials grant flow](https://datatracker.ietf.org/doc/html/rfc6749).
 - In terms of API design, machines are represented as an `m2m_client` identity.
 - Security considerations: Exposes API endpoints to perform secret rotation.
-- Applications need to create their own wrapper on top of Stytch's token endpoint in order to be exposed for their customers (unless Stytch provides custom auth domains)
+- SaaS applications need to create their own wrapper on top of Stytch's token endpoint in order to be exposed for their customers (unless Stytch provides custom auth domains)
 
 Reference: **[stytch.com/docs/guides/m2m/authenticate-client](https://stytch.com/docs/guides/m2m/authenticate-client)**
 
@@ -30,7 +30,7 @@ curl --request POST \
 
 The API call returns `client_id` and `client_secret` credentials to be exchanged by the client to get an access token.
 
-Permissions can also be enforced by specifying `scopes` in which is going to be contained in the returned `access_token`.
+Permissions can be enforced by specifying `scopes` in which is going to be contained in the returned `access_token`.
 
 An application has to call this API endpoint in order to surface credentials for usage in other external services.
 
