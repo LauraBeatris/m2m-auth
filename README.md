@@ -21,7 +21,6 @@
 - https://cloud.google.com/run/docs/authenticating/service-to-service
 - https://planetscale.com/docs/concepts/service-tokens
 - https://infisical.com/docs/documentation/platform/token
-- https://www.cerbos.dev/blog/service-to-service-authorization
 
 ## Resources
 - https://www.youtube.com/watch?v=EpK6h1eQUWE
@@ -29,3 +28,4 @@
 - https://kalpads.medium.com/service-to-service-authentication-authorisation-patterns-e081b078be94
 - https://engineering.sada.com/how-to-use-json-web-tokens-for-service-to-service-authentication-b272059b7ed5
 - https://stackoverflow.com/questions/61433192/quick-solution-to-handle-service-to-service-authentication-in-a-microservices-ar
+- https://www.cerbos.dev/blog/service-to-service-authorization

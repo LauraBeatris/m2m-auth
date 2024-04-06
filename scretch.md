@@ -12,6 +12,7 @@ an autonomous system.
 ## Client Credentials Grant - OAuth 2.0
 
 https://datatracker.ietf.org/doc/html/rfc6749
+https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/
 
 The clients holds two pieces of information: The client ID and the client secret. With that, the client can request an access token.
 
