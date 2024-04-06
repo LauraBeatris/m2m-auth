@@ -1,0 +1,15 @@
+{
+  "name": "Machine To Machine Auth",
+  "description": "Product shaping for Machine to Machine auth across different providers",
+  "domain": "https://m2m-auth.pages.dev/",
+  "twitter": "@lauradotjs",
+  "sidebar": [
+    {
+      "title": "Links",
+      "pages": [
+        ["GitHub", "https://github.com/LauraBeatris/m2m-auth"],
+        ["Twitter", "https://twitter.com/lauradotjs"]
+      ]
+    }
+  ]
+}
