@@ -5,6 +5,25 @@
   "twitter": "@lauradotjs",
   "sidebar": [
     {
+      "title": "Use cases"
+    },
+    {
+      "title": "Credentials"
+    },
+    {
+      "title": "Design"
+    },
+    {
+      "title": "DX Research",
+      "pages": [
+        ["Stytch", "/research/stytch"],
+        ["Propelauth", "/research/propelauth"],
+        ["Auth0", "/research/auth0"],
+        ["Cloudflare", "/research/cloudflare"],
+        ["PlanetScale", "/research/planetscale"]
+      ]
+    },
+    {
       "title": "Links",
       "pages": [
         ["GitHub Repository", "https://github.com/LauraBeatris/m2m-auth"]
