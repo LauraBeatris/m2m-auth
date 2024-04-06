@@ -1,0 +1,8 @@
+{
+  "name": "Machine to Machine Auth", // project/library name
+  "description": "Learnings around M2M auth",
+  "domain": "https://example.com",
+
+  "twitter": "@lauradotjs",
+  "sidebar": [] // see 'Sidebar' page
+}
