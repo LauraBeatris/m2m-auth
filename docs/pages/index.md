@@ -1,7 +1,9 @@
 ---
-title: "My documentation site"
+title: "M2M Auth"
 ---
 
-# My documentation site
+# Machine to Machine Auth
 
-Welcome to my documentation site.
+Product shaping for Machine to Machine Auth, including research across various providers and authentication strategies.
+
+*Created by [Laura Beatris](https://github.com/LauraBeatris)*
