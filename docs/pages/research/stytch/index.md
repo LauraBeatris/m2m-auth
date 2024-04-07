@@ -32,8 +32,6 @@ The API call returns `client_id` and `client_secret` credentials to be exchanged
 
 Permissions can be enforced by specifying `scopes` in which is going to be contained in the returned `access_token`.
 
-An application has to call this API endpoint in order to surface credentials for usage in other external services.
-
 ### Calling Stytch's `/oauth2/token` endpoint to retrieve access token
 
 ```bash

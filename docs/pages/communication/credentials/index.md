@@ -24,7 +24,7 @@ Instead of managing those credentials in-house, it's a good practice to use a th
 
 ### JSON Web Tokens
 
-Regardless the authentication protocol chose for M2M communication, it'll involves [JWT]([JSON Web Token](https://datatracker.ietf.org/doc/html/rfc7519)) at some point, therefore let's do a quick recap on it.
+Regardless the authentication protocol chose for M2M communication, it'll involves [JSON Web Token](https://datatracker.ietf.org/doc/html/rfc7519) at some point, therefore let's do a quick recap on it.
 
 #### JWT vs API Keys
 

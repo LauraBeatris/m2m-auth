@@ -14,7 +14,7 @@ This section outlines use cases in which applications have to support for secure
 
 ### API Key Management
 
-The first scenario involves API Key Management, it behaves a bit different than Service-to-Service Tokens. When SaaS applications have their own set of APIs that need to communicate with their customer machines without using user's identity.
+The first scenario involves API Key Management, it behaves differently than Service-to-Service Tokens. When SaaS applications have their own set of APIs that need to communicate with their customer machines without using the user's identity.
 
 A set of API keys are generated from the SaaS application which can then be sent from the customer's API request via a HTTP header.
 
