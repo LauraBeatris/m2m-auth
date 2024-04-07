@@ -15,8 +15,7 @@
       "title": "Design",
       "pages": [
         ["Next.js SDK", "/design/sdk"],
-        ["Components", "/design/components"],
-        ["Backend", "/design/backend"]
+        ["Components", "/design/components"]
       ]
     },
     {
