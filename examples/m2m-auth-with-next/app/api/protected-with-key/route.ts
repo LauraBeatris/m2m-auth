@@ -5,10 +5,6 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const { externalClientId } = auth();
 
-  if (!externalClientId) {
-    return new Response("Unauthorized", { status: 401 });
-  }
-
   const app = getAppById(externalClientId);
 
   if (!app) {

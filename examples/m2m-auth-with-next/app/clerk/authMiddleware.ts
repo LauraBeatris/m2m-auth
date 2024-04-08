@@ -33,14 +33,14 @@ interface AuthMiddlewareParams {
 
 const authMiddleware = ({ protectedWithKeys }: AuthMiddlewareParams) =>
   /**
-   * This would be a new option in Clerk's SDK middleware, but for now we're passing it `publicKeys`.
+   * This would be a new option in Clerk's SDK middleware, but for overriding it as `publicKeys`.
    *
    * The current workaround for developers that integrate Unkey with Clerk, requires setting protected routes with keys to
    * publicRoutes in order to bypass the user's identity verification on the request headers.
    */
   clerkAuthMiddleware({
     publicRoutes: protectedWithKeys,
-    afterAuth(auth, req, evt) {
+    afterAuth(auth, req, _evt) {
       // Handle users who aren't authenticated
       if (!auth.userId && !auth.isPublicRoute) {
         return redirectToSignIn({ returnBackUrl: req.url });
@@ -55,6 +55,7 @@ const authMiddleware = ({ protectedWithKeys }: AuthMiddlewareParams) =>
       if (
         !auth.userId &&
         auth.isPublicRoute &&
+        // Ideally would perform matching based on `protectedWithKeys`
         req.nextUrl.pathname === "/api/protected-with-key"
       ) {
         return protectWithExternalKeys(req);
@@ -83,7 +84,8 @@ async function protectWithExternalKeys(req: NextRequest) {
   }
 
   if (result.ownerId) {
-    // This would be inserted into Clerk's `__session` cookie
+    // This would be inserted into Clerk's `__session` cookie so it can be
+    // passed along `req.auth`
     req.cookies.set("externalClientId", result.ownerId);
   }
 

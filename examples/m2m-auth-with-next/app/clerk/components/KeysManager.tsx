@@ -15,13 +15,14 @@ interface CreateKeyFormProps
 
 interface KeyModalProps {
   keyValue: Key["key"];
-  keyId: Key["keyId"];
   setKey: React.Dispatch<React.SetStateAction<Key | undefined>>;
 }
 
 /**
  * This would be exported from `@clerk/nextjs`. For the purpose of this demo, this component lacks customization
  * and focuses only on the key generation.
+ *
+ * Managing API keys in the UI should be as easy as rendering a component, and letting Clerk take care of the rest.
  */
 export function KeysManager({ externalClientId }: KeysManagerProps) {
   const [key, setKey] = useState<Key>();
@@ -40,14 +41,12 @@ export function KeysManager({ externalClientId }: KeysManagerProps) {
         />
       </div>
 
-      {!!key && (
-        <KeyModal keyValue={key.key} keyId={key.keyId} setKey={setKey} />
-      )}
+      {!!key && <KeyModal keyValue={key.key} setKey={setKey} />}
     </section>
   );
 }
 
-function KeyModal({ keyId, keyValue, setKey }: KeyModalProps) {
+function KeyModal({ keyValue, setKey }: KeyModalProps) {
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 overflow-y-auto h-full w-full">
       <div className="px-6 py-4 relative top-20 mx-auto w-96 shadow-lg rounded-md bg-gray-900">
