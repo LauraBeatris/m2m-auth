@@ -4,7 +4,7 @@ title: "Design - Node.js"
 
 # M2M auth with Node.js
 
-Design proposal on how to perform M2M auth for SaaS applications built with Node.js that expose API endpoints for external clients.
+Design proposal on how to perform M2M auth for SaaS applications built with a Node.js API connected with an auth provider for user's identity and that also exposes API endpoints for external clients.
 
 Clerk is used as the auth provider for this example. Although Clerk doesn't expose M2M auth at the time of writing this, the goal is to showcase how this would fit their product.
 
@@ -24,9 +24,8 @@ app.post('/create-key', ClerkExpressRequireAuth(), async (req, res) => {
   try {
     const { key } = await clerkClient.createKey({
       name: req.body.name,
-      // Links a Clerk API key to a customer record
-      // Clerk's API should also relate a key to the user's id who created the key and it's Clerk application
-      externalClientId: req.body.teamId
+      // Links a key to a customer record
+      consumerId: req.body.customerRecordId
     })
 
     res.json({ key })
@@ -36,9 +35,10 @@ app.post('/create-key', ClerkExpressRequireAuth(), async (req, res) => {
 })
 ```
 
-The key should already be associated with your application client ID, so you don't have to [programmatically create it like with Okta](https://developer.okta.com/blog/2018/06/06/node-api-oauth-client-credentials#register-clients-on-the-fly), however it's necessary to associate with your customer's record so you can access this information on the request.
-
-The hashed key should be returned in the response for better security. When attempting to verify the API Key, then the `key` argument provided should be hashed and compared to the stored hashed key. If they match, then the API Key is valid.
+The key could also be associated with:
+- User: The user's identity whom created the key.
+- Organization: The organization associated with the user's identity whom created the key.
+- Clerk's application ID
 
 #### Protecting API endpoints with keys
 
@@ -74,6 +74,19 @@ app.post('/protected-with-key', ClerkExpressRequireKey(), async (req, res) => {
 })
 ```
 
+#### Keys revocation
+
+There are two types of revocation that should be handled: Automatic revocation & manual revocation.
+
+- Automatic revocation: When the organization is deleted, when the user account is deleted, when the user who created the key leaves the org, or when the token expires.
+- Manual revocation: When deleting API keys or enabling/disabling them via API.
+
+The "organization" and "user" here are the ones tied to the creation of a key - refer to [Creating Keys](#creating-keys).
+
 #### Identify external client within the request
 
-The `req.auth` would contain the `externalClientId` that provides the link to your customer record.
+The `Auth` object should contain an identifier for the non-user principal making the request. An example would be an application belonging to a different domain that has been granted access to the SaaS application's API.
+
+#### Security considerations
+
+The hashed key should be returned in the response for better security. When attempting to verify the API Key, then the `key` argument provided should be hashed and compared to the stored hashed key. If they match, then the API Key is valid.

@@ -93,7 +93,7 @@ export const config = {
 
 #### Identify external client within the request
 
-The `Auth` object should contain a `externalClientId`, essentially the identifier of your customer machine.
+The `Auth` object should contain an identifier for the non-user principal making the request. An example would be an application belonging to a different domain that has been granted access to the SaaS application's API.
 
 This should be accessible via the `auth` helper (requiring the `authMiddleware` to be enabled).
 
@@ -101,8 +101,12 @@ This should be accessible via the `auth` helper (requiring the `authMiddleware` 
 import { auth } from "@clerk/nextjs";
 
 export default function Page() {
-  const { externalClientId } = auth();
+  const { consumerId } = auth();
 
   return (...);
 }
 ```
+
+Using `consumerId` here, with the thought of identifying the machine "consuming" your API. Other options are:
+- `thirdPartyClientId`
+- `externalClientId`
