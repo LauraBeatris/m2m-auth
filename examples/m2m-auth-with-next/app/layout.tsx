@@ -1,3 +1,4 @@
+import "@/app/lib/envSchema";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";

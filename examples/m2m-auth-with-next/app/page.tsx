@@ -1,7 +1,9 @@
+import { KeysManager } from "./clerk/components/KeysManager";
+
 export default function Home() {
   return (
-    <main>
-      <h1>Hello World</h1>
+    <main className="w-full h-full flex flex-col justify-center items-center">
+      <KeysManager />
     </main>
   );
 }
