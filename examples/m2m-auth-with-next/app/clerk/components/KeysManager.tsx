@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
-import { Key, createApiKey } from "../actions";
+import { CreateKeySchema, Key, createApiKey } from "../actions";
 
 type ServerAction<T> = ((data: T) => Promise<void>) & Function;
 
-interface CreateKeyFormProps {
+interface KeysManagerProps extends Pick<CreateKeySchema, "externalClientId"> {}
+
+interface CreateKeyFormProps
+  extends Pick<KeysManagerProps, "externalClientId"> {
   onCreateApiKey: ServerAction<FormData>;
 }
 
@@ -20,7 +23,7 @@ interface KeyModalProps {
  * This would be exported from `@clerk/nextjs`. For the purpose of this demo, this component lacks customization
  * and focuses only on the key generation.
  */
-export function KeysManager() {
+export function KeysManager({ externalClientId }: KeysManagerProps) {
   const [key, setKey] = useState<Key>();
 
   async function onCreateApiKey(formData: FormData) {
@@ -28,10 +31,13 @@ export function KeysManager() {
   }
 
   return (
-    <section className="flex flex-col justify-center items-center rounded-lg text-gray-800 gap-2">
+    <section className="w-full flex flex-col justify-center items-center rounded-lg text-gray-800 gap-2">
       <div className="w-full gap-2">
         <h1 className="text-xl font-bold">API Keys</h1>
-        <CreateKeyForm onCreateApiKey={onCreateApiKey} />
+        <CreateKeyForm
+          onCreateApiKey={onCreateApiKey}
+          externalClientId={externalClientId}
+        />
       </div>
 
       {!!key && (
@@ -43,7 +49,7 @@ export function KeysManager() {
 
 function KeyModal({ keyId, keyValue, setKey }: KeyModalProps) {
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 overflow-y-auto h-full w-full">
       <div className="px-6 py-4 relative top-20 mx-auto w-96 shadow-lg rounded-md bg-gray-700">
         <div className="mt-2 text-left">
           <h3 className="text-lg leading-6 font-medium text-white">
@@ -104,21 +110,23 @@ function KeyModal({ keyId, keyValue, setKey }: KeyModalProps) {
   );
 }
 
-function CreateKeyForm({ onCreateApiKey }: CreateKeyFormProps) {
+function CreateKeyForm({
+  onCreateApiKey,
+  externalClientId,
+}: CreateKeyFormProps) {
   return (
     <form
       action={onCreateApiKey}
-      className="flex flex-col justify-start items-start gap-2 mt-2"
+      className="w-full flex flex-col justify-start items-start gap-2 mt-2"
     >
       <label htmlFor="name">Key Name</label>
       <input
-        className="bg-gray-100 rounded-md p-2"
+        className="w-full bg-gray-100 rounded-md p-2"
         type="text"
         name="name"
         required
       />
-      {/* TODO - Create multiple customer resources */}
-      <input hidden name="externalClientId" defaultValue={"123"} />
+      <input hidden name="externalClientId" defaultValue={externalClientId} />
       <CreateKeyFormButton />
     </form>
   );

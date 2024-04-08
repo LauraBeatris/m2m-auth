@@ -1,17 +1,25 @@
-import { KeysManager } from "./clerk/components/KeysManager";
+import { currentUser } from "@clerk/nextjs";
+import Link from "next/link";
+import { apps } from "./constants";
 
-const baseUrl = "https://m2m-auth.vercel.app";
-const curlCommand = `curl -H "Authorization: Bearer YOUR_API_KEY" ${baseUrl}/api/protected-with-key`;
+export default async function Home() {
+  const user = await currentUser();
 
-export default function Home() {
   return (
     <main className="max-w-2xl flex flex-col justify-start items-start gap-4">
-      <KeysManager />
-
-      <div className="flex flex-col gap-2">
-        <span>Test API route authenticating with your key:</span>
-        <code>{curlCommand}</code>
-      </div>
+      <h1 className="text-2xl text-gray-800 font-bold">
+        Welcome {user?.firstName}!
+      </h1>
+      <h2 className="text-xl text-gray-800 font-medium">Your applications:</h2>
+      {apps.map(({ id, name }) => (
+        <Link
+          className="underline underline-offset-4"
+          key={id}
+          href={`/app/${id}`}
+        >
+          {name}
+        </Link>
+      ))}
     </main>
   );
 }
