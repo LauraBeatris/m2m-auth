@@ -3,9 +3,9 @@ import { getAppById } from "@/app/constants";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const { externalClientId } = auth();
+  const { consumerId } = auth();
 
-  const app = getAppById(externalClientId);
+  const app = getAppById(consumerId);
 
   if (!app) {
     return new Response("Unauthorized", { status: 401 });

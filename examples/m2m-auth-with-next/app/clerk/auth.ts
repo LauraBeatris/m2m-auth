@@ -10,7 +10,7 @@ export function auth() {
    * Coercing to `string`, but this would be safely parsed from the session cookie
    * within Clerk's backend
    */
-  const externalClientId = cookies().get("externalClientId")?.value as string;
+  const consumerId = cookies().get("consumerId")?.value as string;
 
-  return { ...clerkAuth(), externalClientId };
+  return { ...clerkAuth(), consumerId };
 }

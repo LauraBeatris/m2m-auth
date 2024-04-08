@@ -12,7 +12,7 @@ const CreateKeySchema = z.object({
   /**
    * Links a API key to a customer record
    */
-  externalClientId: z.string(),
+  consumerId: z.string(),
 });
 
 export type CreateKeySchema = z.infer<typeof CreateKeySchema>;
@@ -24,7 +24,7 @@ export interface Key {
 
 export async function createApiKey(formData: FormData): Promise<Key> {
   const form = Object.fromEntries(formData);
-  const { name, externalClientId } = CreateKeySchema.parse(form);
+  const { name, consumerId } = CreateKeySchema.parse(form);
 
   const token = process.env.UNKEY_ROOT_KEY;
 
@@ -34,7 +34,7 @@ export async function createApiKey(formData: FormData): Promise<Key> {
   const unkey = new Unkey({ token });
   const { result } = await unkey.keys.create({
     name,
-    ownerId: externalClientId,
+    ownerId: consumerId,
     apiId,
   });
 

@@ -86,7 +86,7 @@ async function protectWithExternalKeys(req: NextRequest) {
   if (result.ownerId) {
     // This would be inserted into Clerk's `__session` cookie so it can be
     // passed along `req.auth`
-    req.cookies.set("externalClientId", result.ownerId);
+    req.cookies.set("consumerId", result.ownerId);
   }
 
   return NextResponse.next();

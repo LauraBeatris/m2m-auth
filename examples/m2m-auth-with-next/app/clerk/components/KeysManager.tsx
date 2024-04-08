@@ -6,10 +6,9 @@ import { CreateKeySchema, Key, createApiKey } from "../actions";
 
 type ServerAction<T> = ((data: T) => Promise<void>) & Function;
 
-interface KeysManagerProps extends Pick<CreateKeySchema, "externalClientId"> {}
+interface KeysManagerProps extends Pick<CreateKeySchema, "consumerId"> {}
 
-interface CreateKeyFormProps
-  extends Pick<KeysManagerProps, "externalClientId"> {
+interface CreateKeyFormProps extends Pick<KeysManagerProps, "consumerId"> {
   onCreateApiKey: ServerAction<FormData>;
 }
 
@@ -24,7 +23,7 @@ interface KeyModalProps {
  *
  * Managing API keys in the UI should be as easy as rendering a component, and letting Clerk take care of the rest.
  */
-export function KeysManager({ externalClientId }: KeysManagerProps) {
+export function KeysManager({ consumerId }: KeysManagerProps) {
   const [key, setKey] = useState<Key>();
 
   async function onCreateApiKey(formData: FormData) {
@@ -37,7 +36,7 @@ export function KeysManager({ externalClientId }: KeysManagerProps) {
         <h1 className="text-xl font-bold">API Keys</h1>
         <CreateKeyForm
           onCreateApiKey={onCreateApiKey}
-          externalClientId={externalClientId}
+          consumerId={consumerId}
         />
       </div>
 
@@ -91,10 +90,7 @@ function KeyModal({ keyValue, setKey }: KeyModalProps) {
   );
 }
 
-function CreateKeyForm({
-  onCreateApiKey,
-  externalClientId,
-}: CreateKeyFormProps) {
+function CreateKeyForm({ onCreateApiKey, consumerId }: CreateKeyFormProps) {
   return (
     <form
       action={onCreateApiKey}
@@ -107,7 +103,7 @@ function CreateKeyForm({
         name="name"
         required
       />
-      <input hidden name="externalClientId" defaultValue={externalClientId} />
+      <input hidden name="consumerId" defaultValue={consumerId} />
       <CreateKeyFormButton />
     </form>
   );

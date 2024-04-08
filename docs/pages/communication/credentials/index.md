@@ -22,6 +22,71 @@ Instead of managing those credentials in-house, it's a good practice to use a th
 
 [![Client Credentials](https://i.ibb.co/6Dzc12z/Clean-Shot-2024-04-07-at-13-22-03.png)](https://ibb.co/HG6Lx06)
 
+### Difference between API Keys and Client Credentials grant flow in OAuth 2.0
+
+With Client Credential grant flow, the client must store a `client_id` and `client_secret` that it uses to acquire and refresh tokens.
+
+With an API key, the client just stores the key. So you might ask yourself, what makes OAuth more secure in this case?
+
+The difference comes down to direct access vs. delegated access.
+
+#### Direct access
+
+The client directly interacts with the resource server using a single set of credentials, such as an API key.
+
+- The API key is sent with every request to authenticate the client
+- The resource server must validate the API key and determine the permissions for each request
+- Simpler but less secure, as the API key, if compromised, can give full access to the resources it's associated with. However, this is the reason why keys should be stored as hashed values, which won't get compromised even if leaked.
+
+#### Delegated access
+
+Facilitated by OAuth and the Client Credentials grant flow, introduces an authorization server as an intermediary.
+
+- The client authenticates with the authorization server using its `client_id` and `client_secret` to obtain an access token.
+- Clients might need to be created on the fly, using something like Auth0 Management API:
+
+```ts
+const okta = require('@okta/okta-sdk-nodejs')
+const oktaClient = new okta.Client({
+  orgUrl: process.env.ORG_URL,
+  token: process.env.TOKEN,
+})
+
+app.get('/register/:label', async (req, res) => {
+  try {
+    const application = await oktaClient.createApplication({
+      name: 'oidc_client',
+      label: req.params.label,
+      signOnMode: 'OPENID_CONNECT',
+      credentials: {
+        oauthClient: {},
+      },
+      settings: {
+        oauthClient: {
+          grant_types: ['client_credentials'],
+          application_type: 'service',
+        },
+      },
+    })
+
+    const { client_id, client_secret } = application.credentials.oauthClient
+
+    res.json({
+      client_id,
+      client_secret,
+      request_token_url: `${process.env.ISSUER}/v1/token`,
+    })
+  } catch (error) {
+    res.json({ error: error.message })
+  }
+})
+```
+
+#### When to use API keys
+
+- API keys may preferred for their simplicity, and the overhead of implementing OAuth is deemed unnecessary.
+- They are suitable for internal or simple applications where the management of OAuth tokens adds unnecessary complexity.
+
 ### JSON Web Tokens
 
 Regardless the authentication protocol chose for M2M communication, it'll involves [JSON Web Token](https://datatracker.ietf.org/doc/html/rfc7519) at some point, therefore let's do a quick recap on it.

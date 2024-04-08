@@ -49,9 +49,9 @@ import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs';
 
 export async function GET() {
-  const { externalClientId } = auth();
+  const { consumerId } = auth();
 
-  if (!externalClientId){
+  if (!consumerId){
     return new Response("Unauthorized", { status: 401 });
   }
 
@@ -63,13 +63,13 @@ export async function GET() {
 
 ### With middleware
 
-**First approach (recomended):** Introduce a new option into the existing `authMiddleware` to authenticate certain routes via API keys, rather than using the user's identity.
+Introduce a new option into the existing `authMiddleware` to authenticate certain routes via API keys, rather than using the user's identity.
 
 ```ts
 import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
-  protectedWithExternalKeys: ["/my-sass-api-route"],
+  protectedWithKeys: ["/my-sass-api-route"],
 });
 
 export const config = {
@@ -78,18 +78,6 @@ export const config = {
 ```
 
 The current workaround for developers that integrate [Unkey](https://unkey.dev) with Clerk, requires setting protected routes with keys to `publicRoutes` in order to bypass the user's identity verification on the request headers, which is not intuitive.
-
-**Second approach:** Introduce new middleware that authenticates via API keys only.
-
-```ts
-import { authMiddleware } from "@clerk/nextjs";
-
-export default keysMiddleware();
-
-export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
-};
-```
 
 #### Identify external client within the request
 
