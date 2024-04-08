@@ -50,7 +50,7 @@ export function KeysManager({ externalClientId }: KeysManagerProps) {
 function KeyModal({ keyId, keyValue, setKey }: KeyModalProps) {
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 overflow-y-auto h-full w-full">
-      <div className="px-6 py-4 relative top-20 mx-auto w-96 shadow-lg rounded-md bg-gray-700">
+      <div className="px-6 py-4 relative top-20 mx-auto w-96 shadow-lg rounded-md bg-gray-900">
         <div className="mt-2 text-left">
           <h3 className="text-lg leading-6 font-medium text-white">
             API Key Created
@@ -59,24 +59,6 @@ function KeyModal({ keyId, keyValue, setKey }: KeyModalProps) {
             <p className="text-sm text-white">
               Please copy the information for your new API key.
             </p>
-            <div className="mt-4 w-full flex flex-col justify-start items-start">
-              <label
-                htmlFor="apiKeyId"
-                className="block text-sm font-medium text-gray-200"
-              >
-                ID
-              </label>
-              <div className="w-full mt-1 relative rounded-md shadow-sm">
-                <input
-                  type="text"
-                  name="apiKeyId"
-                  id="apiKeyId"
-                  className="w-full pl-3 pr-10 py-2 sm:text-sm rounded-md"
-                  readOnly
-                  defaultValue={keyId}
-                />
-              </div>
-            </div>
             <div className="mt-4">
               <label
                 htmlFor="apiKeyToken"
