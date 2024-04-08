@@ -28,7 +28,7 @@ export function KeysManager() {
   }
 
   return (
-    <section className="flex flex-col justify-center items-center rounded-lg text-gray-800  p-5 gap-2">
+    <section className="flex flex-col justify-center items-center rounded-lg text-gray-800 gap-2">
       <div className="w-full gap-2">
         <h1 className="text-xl font-bold">API Keys</h1>
         <CreateKeyForm onCreateApiKey={onCreateApiKey} />
@@ -43,9 +43,7 @@ export function KeysManager() {
 
 function KeyModal({ keyId, keyValue, setKey }: KeyModalProps) {
   return (
-    <div
-      className={`fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full`}
-    >
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
       <div className="px-6 py-4 relative top-20 mx-auto w-96 shadow-lg rounded-md bg-gray-700">
         <div className="mt-2 text-left">
           <h3 className="text-lg leading-6 font-medium text-white">
@@ -67,7 +65,7 @@ function KeyModal({ keyId, keyValue, setKey }: KeyModalProps) {
                   type="text"
                   name="apiKeyId"
                   id="apiKeyId"
-                  className=" w-full pl-3 pr-10 py-2  sm:text-sm rounded-md"
+                  className="w-full pl-3 pr-10 py-2 sm:text-sm rounded-md"
                   readOnly
                   defaultValue={keyId}
                 />
@@ -78,7 +76,7 @@ function KeyModal({ keyId, keyValue, setKey }: KeyModalProps) {
                 htmlFor="apiKeyToken"
                 className="flex text-sm font-medium text-gray-200"
               >
-                Token
+                Key
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
                 <input
@@ -130,7 +128,7 @@ function CreateKeyFormButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button className="bg-gray-800 p-2 text-white font-medium rounded-md">
+    <button className="bg-gray-800 p-2 w-full text-white font-medium rounded-md">
       {pending ? "Creating Key..." : "Create New Key"}
     </button>
   );
