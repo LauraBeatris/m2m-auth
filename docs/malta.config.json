@@ -32,7 +32,7 @@
       "title": "Links",
       "pages": [
         ["GitHub Repository", "https://github.com/LauraBeatris/m2m-auth"],
-        ["M2M auth with Next.js", "add-vercel-link-here"]
+        ["M2M auth with Next.js", "https://m2m-auth.vercel.app/"]
       ]
     }
   ]
