@@ -20,6 +20,10 @@ export default function Page() {
 }
 ```
 
+Clerk could expose a similar (or even the same - dogfooding) UI component as in their Dashboard:
+
+![Clerk's Secret Keys component](https://i.ibb.co/rt3gyk2/Clean-Shot-2024-04-08-at-12-14-43.png)
+
 ### UI utilities
 
 Besides the UI component, some utilities could also be exposed to manage API keys from the client-side.
