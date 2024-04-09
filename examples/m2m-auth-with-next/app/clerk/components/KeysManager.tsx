@@ -23,7 +23,7 @@ interface KeyModalProps {
  *
  * Managing API keys in the UI should be as easy as rendering a component, and letting Clerk take care of the rest.
  */
-export function KeysManager({ consumerId }: KeysManagerProps) {
+export function ApiKeyManager({ consumerId }: KeysManagerProps) {
   const [key, setKey] = useState<Key>();
 
   async function onCreateApiKey(formData: FormData) {

@@ -1,4 +1,4 @@
-import { KeysManager } from "@/app/clerk/components/KeysManager";
+import { ApiKeyManager } from "@/app/clerk/components/KeysManager";
 import { getAppById, getBaseUrl } from "@/app/constants";
 
 interface AppPageProps {
@@ -20,7 +20,7 @@ export default function AppPage({ params }: AppPageProps) {
     <main className="max-w-[400px] flex flex-col justify-start items-start gap-4">
       <h1 className="text-2xl text-gray-800 font-bold">{app?.name}</h1>
 
-      <KeysManager consumerId={app.id} />
+      <ApiKeyManager consumerId={app.id} />
 
       <div className="flex flex-col gap-2">
         <span>Test API route authenticating with your key:</span>

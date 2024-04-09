@@ -8,15 +8,25 @@ Design proposal on how to perform M2M auth for SaaS applications built with Next
 
 Clerk is used as the auth provider for this example. Although Clerk doesn't expose M2M auth at the time of writing this, the goal is to showcase how this would fit their product.
 
+A live example can be found at **[m2m-auth.vercel.app](https://m2m-auth.vercel.app/)** - [Source code](https://github.com/LauraBeatris/m2m-auth/tree/main/examples/m2m-auth-with-next)
+
+### Table of contents
+
+- [UI Component](#ui-component)
+- [UI utilities](#ui-utilities)
+- [Protecting route handlers](#protecting-route-handlers)
+- [With middleware](#with-middleware)
+- [Identify external client within the request](#identify-external-client-within-the-request)
+
 ### UI Component
 
 Managing keys in the UI should be as easy as rendering a component. Eliminating the need for developers to directly interact with the auth provider to build the UI from scratch.
 
 ```tsx
-import { KeysManager } from '@clerk/nextjs';
+import { ApiKeyManager } from '@clerk/nextjs';
 
 export default function Page() {
-  return <KeysManager />;
+  return <ApiKeyManager />;
 }
 ```
 
