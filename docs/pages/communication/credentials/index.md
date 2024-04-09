@@ -8,34 +8,40 @@ There are many authentication methods that can be used to communicate between ma
 
 ### Table of contents
 
-- [Client Credentials grant flow in OAuth 2.0](#client-credentials-grant-flow-in-oauth-20)
 - [API Keys](#api-keys)
 - [JSON Web Tokens](#json-web-tokens)
 - [OpenID Connect](#openid-connect)
 
-### Client Credentials grant flow in OAuth 2.0
-
-Used by clients to obtain an access token outside of the context of a user, through non-user principals. Typically used by clients to access resources about themselves rather than to access a user's resources.
-
-The client application authenticates with the authorization server using its own credentials. Upon successful authentication, the authorization server issues an access token. The client application can then use this token to make API requests to the resource server.
-
-Instead of managing those credentials in-house, it's a good practice to use a third-party service to handle authorization and manage API keys for your clients.
-
-[![Client Credentials](https://i.ibb.co/6Dzc12z/Clean-Shot-2024-04-07-at-13-22-03.png)](https://ibb.co/HG6Lx06)
-
 ### API Keys
+
+API keys simplify initial setup by avoiding OAuth's complexity, optimizing time to first call and improving DX productivity.
+
+Many great API-first companies out there (Stripe, Twilio, Airtable) use API keys for their services, with the main reasoning: Engineers don't have to think about the indirection of OAuth flows.
+
+API Keys are unique, opaque strings per client, not containing data like JWTs. There is no standard protocol for API Key auth like OAuth, so each implementation can differ per provider.
+
+```ts
+// Pseudo-code to demostrate checking a key and getting metadata
+export async function GET() {
+  const apiKey = request.headers.get("API-Key");
+  const { result } = await client.verifyKey(apiKey);
+
+  if (!result.valid) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  if (result.metadata.companyId) {
+    // ...
+  }
+}
+```
 
 #### API Keys vs JSON Web Tokens
 
 JWTs facilitate user actions, while API keys suit machine/systems interactions where OAuth isn't ideal - [GitHub](../../research/github) is a great example of this.
-
-#### API Keys vs Client Credentials grant flow in OAuth 2.0
-
 With Client Credential grant flow, the client must store a `client_id` and `client_secret` that it uses to acquire and refresh tokens.
 
-With an API key, the client just stores the key. So you might ask yourself, what makes OAuth more secure in this case?
-
-The difference comes down to direct access vs. delegated access.
+With an API key, the client stores the key. So you might ask yourself, what makes one more secure than another? This is pretty debatable, but the main difference comes down to direct access vs. delegated access.
 
 #### Direct access
 
@@ -89,14 +95,41 @@ app.get('/register/:label', async (req, res) => {
 })
 ```
 
-#### When to use API keys
-
-- API keys may preferred for their simplicity, and the overhead of implementing OAuth is deemed unnecessary.
-- They are suitable for internal or simple applications where the management of OAuth tokens adds unnecessary complexity.
-
 ### JSON Web Tokens
 
-OAuth 2.0 involves [JSON Web Token](https://datatracker.ietf.org/doc/html/rfc7519), therefore let's do a quick recap on it.
+[JSON Web Token](https://datatracker.ietf.org/doc/html/rfc7519) authentication uses an OAuth 2.0 identity provider. The identity provider issues tokens after validating the clients are who they say they are.
+
+JWT auth with OAuth uses the Client Credentials flow on the OAuth 2.0 identity server.
+
+JWT-based API auth is a good choice when your ecosystem relies on many integrated microservices since managing numerous API keys can be painful.
+
+#### Client Credentials grant flow in OAuth 2.0
+
+Used by clients to obtain an access token outside of the context of a user, through non-user principals. Typically used by clients to access resources about themselves rather than to access a user's resources.
+
+The client application authenticates with the authorization server using its own credentials. Upon successful authentication, the authorization server issues an access token. The client application can then use this token to make API requests to the resource server.
+
+[![Client Credentials](https://i.ibb.co/6Dzc12z/Clean-Shot-2024-04-07-at-13-22-03.png)](https://ibb.co/HG6Lx06)
+
+Request:
+```bash
+curl --request POST \
+  --url 'https://YOUR_DOMAIN/oauth/token' \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data grant_type=client_credentials \
+  --data client_id=YOUR_CLIENT_ID \
+  --data client_secret=YOUR_CLIENT_SECRET \
+  --data audience=YOUR_API_IDENTIFIER
+```
+
+Response:
+```json
+{
+  "access_token": "eyJz93a...k4laUWw",
+  "token_type": "Bearer",
+  "expires_in": 86400
+}
+```
 
 #### JWT vs API Keys
 
@@ -104,11 +137,16 @@ OAuth 2.0 involves [JSON Web Token](https://datatracker.ietf.org/doc/html/rfc751
 |---------------------|---------------------------------------------------|-------------------------------------------|
 | Type of token       | Self-contained, verifiable JSON-based tokens with claims | Alphanumeric strings or values that must encrypted or signed for security |
 | Security            | More secure than API keys because tokens are cryptographically signed and encrypted | Less secure than JWTs because security depends on implementation for encryption, hashing and storage |
-| Access control      | Supports granular access control via claims and scopes | Requires additional metadata in API keys data to support basic access control |
-| Validity            | Supports token expiration                         | Keys have to be revoked manually or rotated |
+| Access control      | Supports granular access control via claims and scopes | Permissions can be changed even after they are issued.
+ |
+| Validity            | Supports token expiration, cannot be revoked manually                         | Keys can be revoked manually or rotated |
 | Verification            | Local validation pattern to validate an JWT | Increase of latency since each API request sent to your server requires a request sent to the OAuth server |
 
 #### Format
+
+The output of the signed JWT is built on top of Base64 encoding which is URL safe.
+
+The JWT contains a `sub` parameter that identifies the client. The token also includes a aud parameter that specifies which API the token can call. Details on additional fields follow:
 
 - Header (JSON) [required]:
   - `alg` - The signing algorithm used
@@ -121,21 +159,6 @@ OAuth 2.0 involves [JSON Web Token](https://datatracker.ietf.org/doc/html/rfc751
   - `iat` - The time the token was issued
   - `jti` - The unique identifier for the token
 - Signature [required]
-
-#### Base64-URL
-
-The output of the signed JWT is built on top of Base64 encoding which is URL safe.
-
-#### Private claims
-
-Defined by consumers and producers of the JWT.
-
-```json
-{
-  "profile.modify": true,
-  "catalog.service": ["read", "write", "delete"]
-}
-```
 
 #### Best Practices
 
