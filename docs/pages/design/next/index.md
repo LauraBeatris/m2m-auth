@@ -22,8 +22,8 @@ A live example can be found at **[m2m-auth.vercel.app](https://m2m-auth.vercel.a
 
 Managing keys in the UI should be as easy as rendering a component. Eliminating the need for developers to directly interact with the auth provider to build the UI from scratch.
 
-```tsx
-import { ApiKeyManager } from '@clerk/nextjs';
+```tsxs
+import { ApiKeyManager } from '@clerk/react';
 
 export default function Page() {
   return <ApiKeyManager />;
@@ -46,15 +46,15 @@ Clerk could expose a similar (or even the same - dogfooding) UI component as in 
 
 Besides the UI component, some utilities could also be exposed to manage API keys from the client-side.
 
-React Hooks, such as: `useApiKeys()`
+React Hooks, such as: `useApiKeyManager()`
 
 ```tsx
 "use client";
 
-import { useApiKeys } from "@clerk/clerk-react";
+import { useApiKeyManager } from "@clerk/clerk-react";
 
 export default function Page() {
-  const { apiKeys, createApiKeys } = useApiKeys();
+  const { apiKeys, createApiKeys } = useApiKeyManager();
 
   return (...);
 }
