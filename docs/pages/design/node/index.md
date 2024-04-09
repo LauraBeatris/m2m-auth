@@ -98,6 +98,8 @@ The `Auth` object should contain an identifier for the non-user principal making
 
 #### Storage
 
+Store the hash of a key and consider saving the last few digits of your key for reference. This helps customers identify which key they want to revoke, change scopes for, etc.
+
 API-key storage implementations is divided into two groups: **Retrievable** and **Irretrievable**. Each have their security tradeoffs.
 
 **Irretrievable:**
@@ -142,3 +144,5 @@ That checksum can also be a signed hash. The signing authority can be confident 
 Requests to manage keys should be as fast as possible. An in-memory cache can be used to store keys in order to perform a database roundtrip on every single read.
 
 For security, it's recommended to perform caching only hashed key versions and perform pre-hash collision checks during key creation to avoid collisions.
+
+Also, verify incoming API tokens early in an HTTP request's lifecycle.

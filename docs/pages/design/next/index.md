@@ -41,6 +41,7 @@ Clerk could expose a similar (or even the same - dogfooding) UI component as in 
 - Depending on the key format (and this is related with the API implementation as well) then keys might be easier to select - it is easier to select the API key in snake case:
   - `4a8b93d2-7f82-46f8-a8b1-88f2a5d67254`
   - `b7e23eeb44b34185bcf657e5c88df016_24d4b6`
+- Show the token's last few digits in the UI to help users manage keys effectively.
 
 ### UI utilities
 
