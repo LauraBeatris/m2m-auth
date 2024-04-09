@@ -34,6 +34,14 @@ Clerk could expose a similar (or even the same - dogfooding) UI component as in 
 
 ![Clerk's Secret Keys component](https://i.ibb.co/rt3gyk2/Clean-Shot-2024-04-08-at-12-14-43.png)
 
+#### Best practices
+
+- Displaying the key creation date helps developers link it to incidents and distinguish between multiple keys.
+- Only display API keys on request, preferably using a copy button to avoid showing them.
+- Depending on the key format (and this is related with the API implementation as well) then keys might be as easy to select - it is to select the API key in snake case:
+  - `4a8b93d2-7f82-46f8-a8b1-88f2a5d67254`
+  - `b7e23eeb44b34185bcf657e5c88df016_24d4b6`
+
 ### UI utilities
 
 Besides the UI component, some utilities could also be exposed to manage API keys from the client-side.
