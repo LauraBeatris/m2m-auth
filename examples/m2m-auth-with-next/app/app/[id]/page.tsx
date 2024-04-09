@@ -1,4 +1,4 @@
-import { ApiKeyManager } from "@/app/clerk/components/KeysManager";
+import { ApiKeyManager } from "@/app/clerk/components/ApiKeyManager";
 import { getAppById, getBaseUrl } from "@/app/constants";
 
 interface AppPageProps {
