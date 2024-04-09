@@ -8,7 +8,16 @@ Design proposal on how to perform M2M auth for SaaS applications built with a No
 
 Clerk is used as the auth provider for this example. Although Clerk doesn't expose M2M auth at the time of writing this, the goal is to showcase how this would fit their product.
 
-### API Endpoints
+### Table of contents
+
+- [API endpoints](#api-endpoints)
+- [Creating keys](#creating-keys)
+- [Protecting API endpoints with keys](#protecting-api-endpoints-with-keys)
+- [Keys revocation](#keys-revocation)
+- [Identify external client within the request](#identify-external-client-within-the-request)
+- [Security considerations](#security-considerations)
+
+### API endpoints
 
 #### Creating keys
 
