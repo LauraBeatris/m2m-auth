@@ -24,6 +24,7 @@
         ["Stytch", "/research/stytch"],
         ["Propelauth", "/research/propelauth"],
         ["Auth0", "/research/auth0"],
+        ["GitHub", "/research/github"],
         ["Cloudflare", "/research/cloudflare"],
         ["PlanetScale", "/research/planetscale"]
       ]

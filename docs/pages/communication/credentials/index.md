@@ -9,6 +9,7 @@ There are many authentication methods that can be used to communicate between ma
 ### Table of contents
 
 - [Client Credentials grant flow in OAuth 2.0](#client-credentials-grant-flow-in-oauth-20)
+- [API Keys](#api-keys)
 - [JSON Web Tokens](#json-web-tokens)
 - [OpenID Connect](#openid-connect)
 
@@ -22,7 +23,13 @@ Instead of managing those credentials in-house, it's a good practice to use a th
 
 [![Client Credentials](https://i.ibb.co/6Dzc12z/Clean-Shot-2024-04-07-at-13-22-03.png)](https://ibb.co/HG6Lx06)
 
-### Difference between API Keys and Client Credentials grant flow in OAuth 2.0
+### API Keys
+
+#### API Keys vs JSON Web Tokens
+
+JWTs facilitate user actions, while API keys suit machine/systems interactions where OAuth isn't ideal - [GitHub](../../research/github) is a great example of this.
+
+#### API Keys vs Client Credentials grant flow in OAuth 2.0
 
 With Client Credential grant flow, the client must store a `client_id` and `client_secret` that it uses to acquire and refresh tokens.
 
@@ -89,7 +96,7 @@ app.get('/register/:label', async (req, res) => {
 
 ### JSON Web Tokens
 
-Regardless the authentication protocol chose for M2M communication, it'll involves [JSON Web Token](https://datatracker.ietf.org/doc/html/rfc7519) at some point, therefore let's do a quick recap on it.
+OAuth 2.0 involves [JSON Web Token](https://datatracker.ietf.org/doc/html/rfc7519), therefore let's do a quick recap on it.
 
 #### JWT vs API Keys
 
