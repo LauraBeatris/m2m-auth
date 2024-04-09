@@ -10,16 +10,13 @@ Clerk is used as the auth provider for this example. Although Clerk doesn't expo
 
 ### Table of contents
 
-- [API endpoints](#api-endpoints)
 - [Creating keys](#creating-keys)
 - [Protecting API endpoints with keys](#protecting-api-endpoints-with-keys)
 - [Keys revocation](#keys-revocation)
 - [Identify external client within the request](#identify-external-client-within-the-request)
 - [Security considerations](#security-considerations)
 
-### API endpoints
-
-#### Creating keys
+### Creating keys
 
 This example is only providing the key `name` as metadata, but other properties might be needed as well for further customization, such as:
 - Roles, for access control
@@ -49,7 +46,7 @@ The key could also be associated with:
 - Organization: The organization associated with the user's identity whom created the key.
 - Clerk's application ID
 
-#### Protecting API endpoints with keys
+### Protecting API endpoints with keys
 
 **First approach:** Calls SDK to verify key and handles the response.
 ```js
@@ -83,7 +80,7 @@ app.post('/protected-with-key', ClerkExpressRequireKey(), async (req, res) => {
 })
 ```
 
-#### Keys revocation
+### Keys revocation
 
 There are two types of revocation that should be handled: Automatic revocation & manual revocation.
 
@@ -92,10 +89,28 @@ There are two types of revocation that should be handled: Automatic revocation &
 
 The "organization" and "user" here are the ones tied to the creation of a key - refer to [Creating Keys](#creating-keys).
 
-#### Identify external client within the request
+### Identify external client within the request
 
 The `Auth` object should contain an identifier for the non-user principal making the request. An example would be an application belonging to a different domain that has been granted access to the SaaS application's API.
 
-#### Security considerations
+### Security considerations
 
-The hashed key should be returned in the response for better security. When attempting to verify the API Key, then the `key` argument provided should be hashed and compared to the stored hashed key. If they match, then the API Key is valid.
+#### Storage
+
+API-key storage implementations is divided into two groups: **Retrievable** and **Irretrievable**. Each have their security tradeoffs.
+
+**Irretrievable:**
+
+The keys are stored via a one-way encryption process so they can never be retrieved, or stolen from the database in a worse case scenario. Stripe and Amazon AWS use this approach.
+
+It's recommended to store keys as sha256 hashes and set primary keys to minimize hash collisions, also having retry logic on creation and insertion.
+
+[Unkey](https://unkey.dev/docs/security/overview) applies a similar concept, where the hashed keys get stored. When attempting to verify the API Key, then the `key` argument gets hashed and compared to the stored hashed key. If they match, then the API Key is valid.
+
+**Retrievable**:
+
+Keys are stored encrypted via reversible encryption. Users are less pressured to immediately secure the key, reducing loss risk.
+
+Twilio, AirTable, RapidAPI use this approach.
+
+Use encryption for database-stored values to be retrievable later, either via a secure vault or by managing encryption directly in a standard database.
