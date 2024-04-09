@@ -114,3 +114,11 @@ Keys are stored encrypted via reversible encryption. Users are less pressured to
 Twilio, AirTable, RapidAPI use this approach.
 
 Use encryption for database-stored values to be retrievable later, either via a secure vault or by managing encryption directly in a standard database.
+
+#### Rolling transition period & key revocation
+
+All API keys should be revocable, in case users accidentally expose it.
+
+Customers should be allowed to set a rolling transition period for key updates to prevent system failures upon immediate revocation, except in critical situations. Here's an example from Stripe:
+
+![Stripe - Roll API key](https://i.ibb.co/0y5rv9w/76c95f5b-d1b5-4623-8564-7adae623f9c1.png)
