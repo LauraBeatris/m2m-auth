@@ -1,4 +1,4 @@
-name: CI
+name: generate-api-keys package CI
 on: [push]
 jobs:
   build:
